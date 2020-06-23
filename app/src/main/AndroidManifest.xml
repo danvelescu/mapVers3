@@ -30,8 +30,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.home.HomeActivity"></activity>
-
     </application>
 
 </manifest>

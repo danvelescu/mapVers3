@@ -1,5 +1,7 @@
 package com.example.mapvers3;
 
+import android.media.Image;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -25,6 +27,8 @@ public class ContentPage implements Serializable {
 
     @ColumnInfo(name = "long")
     private Double longitudine;
+
+    public ContentPage(){}
 
     public ContentPage(int id, String nameInfo, String info, byte[] image, Double lat, Double longitudine) {
         this.id = id;

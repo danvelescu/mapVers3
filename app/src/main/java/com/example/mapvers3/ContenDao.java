@@ -12,8 +12,6 @@ public interface ContenDao {
     @Query("SELECT * FROM ContentPage")
     List<ContentPage> getAll();
 
-
-
     @Insert
     void insert(ContentPage content);
 

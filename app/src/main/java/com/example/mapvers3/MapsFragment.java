@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mapvers3.ui.home.ContentAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -16,8 +19,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsFragment extends Fragment {
+import java.util.List;
 
+public class MapsFragment extends Fragment {
+private boolean chekPosition = false;
+    Integer id;
+    GoogleMap googlemap;
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
@@ -31,9 +38,11 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            googlemap = googleMap;
             LatLng sydney = new LatLng(-34, 151);
             googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            getTasks();
         }
     };
 
@@ -53,5 +62,51 @@ public class MapsFragment extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+
+        Bundle bundle = this.getArguments();
+        try {
+             id =  bundle.getInt("id");
+            chekPosition = true;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void getTasks()
+    {
+        class GetTasks extends AsyncTask<Void,Void, List<ContentPage>> {
+
+            @Override
+            protected List<ContentPage> doInBackground(Void... voids) {
+                List<ContentPage> listofcontent = DataBaseClient
+                        .getInstance(getContext())
+                        .getAppDatabase()
+                        .contentDao()
+                        .getAll();
+                return listofcontent;
+            }
+
+            @Override
+            protected void onPostExecute(List<ContentPage> contentPages) {
+                super.onPostExecute(contentPages);
+                System.out.println(contentPages.get(0).getLat()+"  "+contentPages.get(0).getLongitudine());
+
+                LatLng sydney = new LatLng(contentPages.get(0).getLat(), contentPages.get(0).getLongitudine());
+                googlemap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+                googlemap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            }
+        }
+        GetTasks gt = new GetTasks();
+        gt.execute();
+    }
+
+
+    private ContentPage FindById(List<ContentPage> pages){
+        for (ContentPage a:pages) {
+            if(a.getId() ==  id){
+                return a;
+            }
+        }
+        return new ContentPage();
     }
 }
