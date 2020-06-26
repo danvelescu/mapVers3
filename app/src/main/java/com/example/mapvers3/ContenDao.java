@@ -13,6 +13,9 @@ public interface ContenDao {
     List<ContentPage> getAll();
 
     @Insert
+    void insertAll(List<ContentPage> contents);
+
+    @Insert
     void insert(ContentPage content);
 
     @Delete

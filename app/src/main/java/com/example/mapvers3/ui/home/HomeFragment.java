@@ -29,6 +29,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mapvers3.AppDatabase;
+import com.example.mapvers3.ContenDao;
 import com.example.mapvers3.ContentPage;
 import com.example.mapvers3.DataBaseClient;
 import com.example.mapvers3.MapActivity;
@@ -74,6 +76,7 @@ public class HomeFragment extends Fragment {
                 setDBdata();
             }
         });
+
         getTasks();
 
         return root;
@@ -90,7 +93,7 @@ public class HomeFragment extends Fragment {
                         .getAppDatabase()
                         .contentDao()
                         .getAll();
-                Log.println(Log.ASSERT,"alert1",listofcontent.get(2).getImage().toString());
+
                 return listofcontent;
             }
 
@@ -111,15 +114,22 @@ public class HomeFragment extends Fragment {
 
             byte[] imag1 = imageViewToByte("aula_0");
 
+            List<ContentPage> listOfContents = new ArrayList<>();
 
-
-
-
+            //int id, String nameInfo, String info, byte[] image, Double lat, Double longitudine
             @Override
             protected Void doInBackground(Void... voids) {
 
 
-               return null;
+                listOfContents.add(new ContentPage(0,"name0","info0",imag1,45.7526686,24.1127237));
+                listOfContents.add(new ContentPage(1,"name1","info1",imag1,46.7526686,26.1127237));
+                listOfContents.add(new ContentPage(2,"name2","info2",imag1,47.7526686,27.1127237));
+                listOfContents.add(new ContentPage(3,"name3","info3",imag1,48.7526686,28.1127237));
+
+                DataBaseClient.getInstance(root.getContext()).getAppDatabase()
+                        .contentDao().insertAll(listOfContents);
+
+                return null;
             }
 
             @Override

@@ -3,4 +3,11 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="phaedra1">#00a388</color>
+    <color name="phaedra2">#79bd8f</color>
+    <color name="phaedra3">#beeb9f</color>
+    <color name="phaedra4">#ffff9d</color>
+
+
 </resources>
