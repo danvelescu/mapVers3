@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.proto.ProtoOutputStream;
@@ -18,12 +19,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mapvers3.ContentPage;
+import com.example.mapvers3.DataBaseClient;
+import com.example.mapvers3.ImagePage;
 import com.example.mapvers3.MapActivity;
 import com.example.mapvers3.MapsFragment;
 import com.example.mapvers3.R;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -33,11 +38,14 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     private Context mCtx;
     private List<ContentPage> contentlist;
     FragmentManager root;
-
-    public ContentAdapter(Context mCtx, List<ContentPage> contentlist,FragmentManager fragmentManager){
+   private List<ImagePage>imagePages;
+  private  RecyclerView recyclerView1;
+  private ImageAdapter adapter;
+    public ContentAdapter(Context mCtx, List<ContentPage> contentlist, FragmentManager fragmentManager,List<ImagePage>imagePages){
         this.mCtx = mCtx;
         this.contentlist = contentlist;
         this.root = fragmentManager;
+        this.imagePages=imagePages;
     }
 
 
@@ -53,9 +61,16 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         ContentPage c = contentlist.get(position);
         holder.text1.setText(c.getInfo());
         holder.text2.setText(c.getNameInfo());
-        byte[] image = c.getImage();
-        Bitmap bitmab = BitmapFactory.decodeByteArray(image,0,image.length);
-        holder.image.setImageBitmap(bitmab);
+        System.out.println("test111.3");
+        List<ImagePage>list=getSortImages(position,imagePages);
+        adapter = new ImageAdapter(list,mCtx,position);
+        recyclerView1.setAdapter(adapter);
+
+
+        //---------------------------------------------
+//        byte[] image = c.getImage();
+//        Bitmap bitmab = BitmapFactory.decodeByteArray(image,0,image.length);
+//        holder.image.setImageBitmap(bitmab);
     }
 
     @Override
@@ -65,13 +80,15 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
 
     class ContentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView text1,text2;
-        ImageView image;
 
-        public ContentViewHolder(@NonNull View itemView) {
+
+        public ContentViewHolder(@NonNull View itemView)  {
             super(itemView);
             text1 = itemView.findViewById(R.id.textView2);
             text2 = itemView.findViewById(R.id.textView3);
-            image = itemView.findViewById(R.id.imageContent);
+            recyclerView1 = itemView.findViewById(R.id.recyclerView2);
+            recyclerView1.setLayoutManager(new LinearLayoutManager(mCtx,LinearLayoutManager.HORIZONTAL,false));
+
             itemView.setOnClickListener(this);
 
         }
@@ -97,4 +114,15 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         transaction.addToBackStack(null);
         transaction.commit();
     }
+  List<ImagePage> getSortImages(int pos,List<ImagePage> imagePage){
+      List<ImagePage> sortimg=new ArrayList<>();
+     for(int i=0;i<imagePage.size();i++){
+         if(pos==imagePage.get(i).getContentID()){
+             sortimg.add(imagePage.get(i));
+         }
+         System.out.println(imagePage.size()+"ddddddd");
+     }
+     return sortimg;
+  }
+
 }

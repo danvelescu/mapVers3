@@ -35,5 +35,6 @@ din 2000 până în prezent. În 2001, ministerul ridică Liceul "Brukenthal" la
     <string name = "image2din3">brukenthal3</string>
     <string name="lat2">45.7965037</string>
     <string name="long2">45.7965037</string>
+    <string name="smapinfostring">name1</string>
 
 </resources>

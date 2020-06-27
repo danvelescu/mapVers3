@@ -23,4 +23,20 @@ public interface ContenDao {
 
     @Update
     void update(ContentPage task);
+
+
+    @Query("SELECT * FROM images")
+    List<ImagePage> getAllimagies();
+
+    @Insert
+    void insertAllimagies(List<ImagePage> contents);
+
+    @Insert
+    void insert(ImagePage content);
+
+    @Delete
+    void delete(ImagePage content);
+
+    @Update
+    void update(ImagePage task);
 }

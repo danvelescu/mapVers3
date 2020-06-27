@@ -43,6 +43,7 @@ import static android.content.ContentValues.TAG;
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
     LatLng mDefaultLocation = new LatLng(45, 24);
     private int DEFAULT_ZOOM = 1;
+    private int MAX_ZOOM = 5;
     private Location mLastKnownLocation;
     private boolean mLocationPermissionGranted;
     private boolean chekPosition = false;
@@ -50,8 +51,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     PlaceDetectionClient mPlaceDetectionClient;
     FusedLocationProviderClient mFusedLocationProviderClient;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 100;
-    Integer id;
+    Integer id=-1;
     GoogleMap googlemap;
+
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -78,7 +80,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
         // Construct a GeoDataClient.
         mGeoDataClient = Places.getGeoDataClient(super.getContext(), null);
 
@@ -93,6 +94,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        getTasks();
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.nav_map);
@@ -129,10 +131,20 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             @Override
             protected void onPostExecute(List<ContentPage> contentPages) {
                 super.onPostExecute(contentPages);
-                ContentPage targetPlace;
+                ContentPage targetPlace=new ContentPage();
                 LatLng target;
                 MarkerOptions markerO;
                 try {
+                    for (ContentPage place : contentPages
+                    ) {
+                        if (place.getId() != targetPlace.getId()) {
+                            target = new LatLng(place.getLat(), place.getLongitudine());
+                            markerO = new MarkerOptions().position(target).title(place.getNameInfo());
+                            googlemap.addMarker(markerO);
+                        }
+
+                    }
+                    googlemap.setMaxZoomPreference(MAX_ZOOM);
                     targetPlace = FindById(contentPages);
                     target = new LatLng(targetPlace.getLat(), targetPlace.getLongitudine());
                     markerO = new MarkerOptions().position(target).title(targetPlace.getNameInfo());
@@ -140,14 +152,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     googlemap.addMarker(markerO);
                     googlemap.moveCamera(CameraUpdateFactory.newLatLng(target));
 
-                    for (ContentPage place : contentPages
-                    ) {
-                        if (place != targetPlace) {
-                            target = new LatLng(place.getLat(), place.getLongitudine());
-                            markerO = new MarkerOptions().position(target).title(place.getNameInfo());
-                            googlemap.addMarker(markerO);
-                        }
-                    }
+
 
                 } catch (NullPointerException e) {
                     e.printStackTrace();
