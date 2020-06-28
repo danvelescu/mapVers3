@@ -13,6 +13,9 @@ public class ContentPage implements Serializable {
     @PrimaryKey
     private int id;
 
+    @ColumnInfo(name = "link")
+    private String link;
+
     @ColumnInfo(name = "nameInfo")
     private String nameInfo;
 
@@ -30,13 +33,22 @@ public class ContentPage implements Serializable {
 
     public ContentPage(){}
 
-    public ContentPage(int id, String nameInfo, String info, byte[] image, Double lat, Double longitudine) {
+    public ContentPage(int id, String nameInfo, String info, byte[] image, Double lat, Double longitudine,String link) {
         this.id = id;
         this.nameInfo = nameInfo;
         this.info = info;
         this.image = image;
         this.lat = lat;
         this.longitudine = longitudine;
+        this.link=link;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public int getId() {

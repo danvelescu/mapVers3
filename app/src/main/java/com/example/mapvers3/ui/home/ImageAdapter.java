@@ -36,7 +36,6 @@ int superpostion;
     public ImageAdapter(List<ImagePage> images, Context mCtx,int parentadaptorpostion) {
         this.images = images;
         this.mCtx = mCtx;
-        System.out.println("test111.6");
         this.superpostion=parentadaptorpostion;
     }
 
@@ -49,12 +48,9 @@ int superpostion;
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        System.out.println("eu ajung");
-
             byte[] image = images.get(position).getImage();
             Bitmap bitmab = BitmapFactory.decodeByteArray(image, 0, image.length);
             holder.image.setImageBitmap(bitmab);
-
     }
 
 

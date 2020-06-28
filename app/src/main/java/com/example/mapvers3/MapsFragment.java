@@ -43,7 +43,7 @@ import static android.content.ContentValues.TAG;
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
     LatLng mDefaultLocation = new LatLng(45, 24);
     private int DEFAULT_ZOOM = 1;
-    private int MAX_ZOOM = 5;
+
     private Location mLastKnownLocation;
     private boolean mLocationPermissionGranted;
     private boolean chekPosition = false;
@@ -144,7 +144,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         }
 
                     }
-                    googlemap.setMaxZoomPreference(MAX_ZOOM);
+                    
                     targetPlace = FindById(contentPages);
                     target = new LatLng(targetPlace.getLat(), targetPlace.getLongitudine());
                     markerO = new MarkerOptions().position(target).title(targetPlace.getNameInfo());
@@ -206,7 +206,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         }
-
         updateLocationUI();
     }
 

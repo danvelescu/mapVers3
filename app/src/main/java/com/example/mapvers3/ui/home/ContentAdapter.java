@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.util.proto.ProtoOutputStream;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -28,6 +30,7 @@ import com.example.mapvers3.MapActivity;
 import com.example.mapvers3.MapsFragment;
 import com.example.mapvers3.R;
 
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
@@ -36,6 +39,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
    public static List<ContentPage> content;
     private static int adapterposition;
     private Context mCtx;
+
     private List<ContentPage> contentlist;
     FragmentManager root;
    private List<ImagePage>imagePages;
@@ -57,20 +61,23 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContentViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ContentViewHolder holder, final int position) {
         ContentPage c = contentlist.get(position);
         holder.text1.setText(c.getInfo());
         holder.text2.setText(c.getNameInfo());
-        System.out.println("test111.3");
+        holder.linkbtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse(contentlist.get(position).getLink()); // missing 'http://' will cause crashed
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                mCtx.startActivity(intent);
+            }
+        });
+
         List<ImagePage>list=getSortImages(position,imagePages);
         adapter = new ImageAdapter(list,mCtx,position);
         recyclerView1.setAdapter(adapter);
 
-
-        //---------------------------------------------
-//        byte[] image = c.getImage();
-//        Bitmap bitmab = BitmapFactory.decodeByteArray(image,0,image.length);
-//        holder.image.setImageBitmap(bitmab);
     }
 
     @Override
@@ -80,10 +87,12 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
 
     class ContentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView text1,text2;
+        Button linkbtn;
 
 
         public ContentViewHolder(@NonNull View itemView)  {
             super(itemView);
+             linkbtn = itemView.findViewById(R.id.button);
             text1 = itemView.findViewById(R.id.textView2);
             text2 = itemView.findViewById(R.id.textView3);
             recyclerView1 = itemView.findViewById(R.id.recyclerView2);
@@ -120,7 +129,6 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
          if(pos==imagePage.get(i).getContentID()){
              sortimg.add(imagePage.get(i));
          }
-         System.out.println(imagePage.size()+"ddddddd");
      }
      return sortimg;
   }

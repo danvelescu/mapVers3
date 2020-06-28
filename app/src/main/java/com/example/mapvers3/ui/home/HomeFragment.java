@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
 
    private View root;
    private FragmentManager fragmentHomeManager;
-    private RecyclerView recyclerView,recyclerView1;
+    private RecyclerView recyclerView;
     private List<ContentPage>contentPagess;
     private HomeViewModel homeViewModel;
     private List<ImagePage>imagePages = new ArrayList<>();
@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
                         .getAppDatabase()
                         .contentDao()
                         .getAll();
-                System.out.println("test111.1"+listofcontent.get(0));
+
                 return listofcontent;
             }
 
@@ -116,42 +116,192 @@ public class HomeFragment extends Fragment {
         class SaveContent extends AsyncTask<Void, Void ,Void> {
             @SuppressLint("ResourceType")
 
-            byte[] imag1 = imageViewToByte("aula_0");
-
-
-
-
-
 
             List<ContentPage> listOfContents = new ArrayList<>();
             List<ImagePage> listOfimagies = new ArrayList<>();
             //int id, String nameInfo, String info, byte[] image, Double lat, Double longitudine
             @Override
             protected Void doInBackground(Void... voids) {
+                listOfimagies.add(new ImagePage(0,0,imageViewToByte(getString(R.string.image1din1))));
+                listOfimagies.add(new ImagePage(1,0,imageViewToByte(getString(R.string.image1din2))));
+                listOfimagies.add(new ImagePage(2,0,imageViewToByte(getString(R.string.image1din3))));
+                listOfimagies.add(new ImagePage(3,1,imageViewToByte(getString(R.string.image2din1))));
+                listOfimagies.add(new ImagePage(4,1,imageViewToByte(getString(R.string.image2din2))));
+                listOfimagies.add(new ImagePage(5,1,imageViewToByte(getString(R.string.image2din3))));
+                listOfimagies.add(new ImagePage(6,2,imageViewToByte(getString(R.string.image3din1))));
+                listOfimagies.add(new ImagePage(7,2,imageViewToByte(getString(R.string.image3din2))));
+                listOfimagies.add(new ImagePage(8,2,imageViewToByte(getString(R.string.image3din3))));
+                listOfimagies.add(new ImagePage(9,3,imageViewToByte(getString(R.string.image4din1))));
+                listOfimagies.add(new ImagePage(10,3,imageViewToByte(getString(R.string.image4din2))));
+                listOfimagies.add(new ImagePage(11,3,imageViewToByte(getString(R.string.image4din3))));
+                listOfimagies.add(new ImagePage(12,3,imageViewToByte(getString(R.string.image4din4))));
+                listOfimagies.add(new ImagePage(13,3,imageViewToByte(getString(R.string.image4din5))));
+                listOfimagies.add(new ImagePage(14,99,imageViewToByte(getString(R.string.image4din5))));
+                listOfimagies.add(new ImagePage(15,4,imageViewToByte(getString(R.string.image5din1))));
+                listOfimagies.add(new ImagePage(16,4,imageViewToByte(getString(R.string.image5din2))));
+                listOfimagies.add(new ImagePage(17,4,imageViewToByte(getString(R.string.image5din3))));
+                listOfimagies.add(new ImagePage(18,4,imageViewToByte(getString(R.string.image5din4))));
+                listOfimagies.add(new ImagePage(19,99,imageViewToByte(getString(R.string.image5din4))));
+                listOfimagies.add(new ImagePage(20,99,imageViewToByte(getString(R.string.image5din4))));
+                listOfimagies.add(new ImagePage(21,5,imageViewToByte(getString(R.string.image6din1))));
+                listOfimagies.add(new ImagePage(22,5,imageViewToByte(getString(R.string.image6din2))));
+                listOfimagies.add(new ImagePage(23,5,imageViewToByte(getString(R.string.image6din3))));
+                listOfimagies.add(new ImagePage(24,5,imageViewToByte(getString(R.string.image6din4))));
+                listOfimagies.add(new ImagePage(25,5,imageViewToByte(getString(R.string.image6din5))));
+                listOfimagies.add(new ImagePage(26,5,imageViewToByte(getString(R.string.image6din6))));
+                listOfimagies.add(new ImagePage(27,6,imageViewToByte(getString(R.string.image7din1))));
+                listOfimagies.add(new ImagePage(28,6,imageViewToByte(getString(R.string.image7din2))));
+                listOfimagies.add(new ImagePage(29,6,imageViewToByte(getString(R.string.image7din3))));
+                listOfimagies.add(new ImagePage(30,7,imageViewToByte(getString(R.string.image8din1))));
+                listOfimagies.add(new ImagePage(31,7,imageViewToByte(getString(R.string.image8din2))));
+                listOfimagies.add(new ImagePage(32,7,imageViewToByte(getString(R.string.image8din3))));
+                listOfimagies.add(new ImagePage(33,7,imageViewToByte(getString(R.string.image8din4))));
+                listOfimagies.add(new ImagePage(34,99,imageViewToByte(getString(R.string.image8din1))));
+                listOfimagies.add(new ImagePage(35,99,imageViewToByte(getString(R.string.image8din1))));
+                listOfimagies.add(new ImagePage(36,8,imageViewToByte(getString(R.string.image9din1))));
+                listOfimagies.add(new ImagePage(37,8,imageViewToByte(getString(R.string.image9din2))));
+                listOfimagies.add(new ImagePage(38,8,imageViewToByte(getString(R.string.image9din3))));
+                listOfimagies.add(new ImagePage(39,8,imageViewToByte(getString(R.string.image9din4))));
+                listOfimagies.add(new ImagePage(40,8,imageViewToByte(getString(R.string.image9din5))));
+                listOfimagies.add(new ImagePage(41,9,imageViewToByte(getString(R.string.image10din1))));
+                listOfimagies.add(new ImagePage(42,9,imageViewToByte(getString(R.string.image10din2))));
+                listOfimagies.add(new ImagePage(43,9,imageViewToByte(getString(R.string.image10din3))));
+                listOfimagies.add(new ImagePage(44,9,imageViewToByte(getString(R.string.image10din4))));
+                listOfimagies.add(new ImagePage(45,10,imageViewToByte(getString(R.string.image11din1))));
+                listOfimagies.add(new ImagePage(46,10,imageViewToByte(getString(R.string.image11din2))));
+                listOfimagies.add(new ImagePage(47,10,imageViewToByte(getString(R.string.image11din3))));
+                listOfimagies.add(new ImagePage(48,10,imageViewToByte(getString(R.string.image11din4))));
+                listOfimagies.add(new ImagePage(49,11,imageViewToByte(getString(R.string.image12din1))));
+                listOfimagies.add(new ImagePage(50,12,imageViewToByte(getString(R.string.image13din1))));
+                listOfimagies.add(new ImagePage(51,13,imageViewToByte(getString(R.string.image14din1))));
+                listOfimagies.add(new ImagePage(52,14,imageViewToByte(getString(R.string.image15din1))));
+                listOfimagies.add(new ImagePage(53,15,imageViewToByte(getString(R.string.image16din1))));
+                listOfimagies.add(new ImagePage(54,16,imageViewToByte(getString(R.string.image17din1))));
+                listOfimagies.add(new ImagePage(55,17,imageViewToByte(getString(R.string.image18din1))));
+                listOfimagies.add(new ImagePage(56,18,imageViewToByte(getString(R.string.image19din1))));
+                listOfimagies.add(new ImagePage(57,19,imageViewToByte(getString(R.string.image20din1))));
 
-//               listOfimagies.add(new ImagePage(0,0,imag1));
-//                listOfimagies.add(new ImagePage(1,0,imag1));
-//                listOfimagies.add(new ImagePage(2,0,imag1));
-//                listOfimagies.add(new ImagePage(3,1,imag1));
-//                listOfimagies.add(new ImagePage(4,1,imag1));
-//                listOfimagies.add(new ImagePage(5,1,imag1));
-//                listOfimagies.add(new ImagePage(6,2,imag1));
-//                listOfimagies.add(new ImagePage(7,2,imag1));
-//                listOfimagies.add(new ImagePage(8,3,imag1));
-//                listOfimagies.add(new ImagePage(9,4,imag1));
-                listOfimagies.add(new ImagePage(15,1,imag1));
-                listOfimagies.add(new ImagePage(16,1,imag1));
-                listOfimagies.add(new ImagePage(17,1,imag1));
-                listOfimagies.add(new ImagePage(18,1,imag1));
-                listOfimagies.add(new ImagePage(19,1,imag1));
-
-
-//              listOfContents.add(new ContentPage(0,"name0","info0",imag1,45.7526686,24.1127237));
-//               listOfContents.add(new ContentPage(1,"name1","info1",imag1,46.7526686,26.1127237));
-//              listOfContents.add(new ContentPage(2,"name2","info2",imag1,47.7526686,27.1127237));
-//               listOfContents.add(new ContentPage(3,"name3","info3",imag1,48.7526686,28.1127237));
-//                listOfContents.add(new ContentPage(4,getString(R.string.nameinfo1),getString(R.string.contentinfo1),imag1,48.7526686,28.1127237));
-
+               // int id, String nameInfo, String info, byte[] image, Double lat, Double longitudine,String link
+                listOfContents.add(new ContentPage(0,getString(R.string.nameinfo1),
+                                getString(R.string.contentinfo1),
+                                imageViewToByte(getString(R.string.image1din1)),
+                                Double.parseDouble(getString(R.string.lat1)),
+                                        Double.parseDouble(getString(R.string.long1)),
+                                        getString(R.string.link1)));
+                listOfContents.add(new ContentPage(1,getString(R.string.nameinfo2),
+                        getString(R.string.contentinfo2),
+                        imageViewToByte(getString(R.string.image2din1)),
+                        Double.parseDouble(getString(R.string.lat2)),
+                        Double.parseDouble(getString(R.string.long2)),
+                        getString(R.string.link2)));
+                listOfContents.add(new ContentPage(2,getString(R.string.nameinfo3),
+                        getString(R.string.contentinfo3),
+                        imageViewToByte(getString(R.string.image3din1)),
+                        Double.parseDouble(getString(R.string.lat3)),
+                        Double.parseDouble(getString(R.string.long3)),
+                        getString(R.string.link3)));
+                listOfContents.add(new ContentPage(3,getString(R.string.nameinfo4),
+                        getString(R.string.contentinfo4),
+                        imageViewToByte(getString(R.string.image4din1)),
+                        Double.parseDouble(getString(R.string.lat4)),
+                        Double.parseDouble(getString(R.string.long4)),
+                        getString(R.string.link4)));
+                listOfContents.add(new ContentPage(4,getString(R.string.nameinfo5),
+                        getString(R.string.contentinfo5),
+                        imageViewToByte(getString(R.string.image5din1)),
+                        Double.parseDouble(getString(R.string.lat5)),
+                        Double.parseDouble(getString(R.string.long5)),
+                        getString(R.string.link5)));
+                listOfContents.add(new ContentPage(5,getString(R.string.nameinfo6),
+                        getString(R.string.contentinfo6),
+                        imageViewToByte(getString(R.string.image6din1)),
+                        Double.parseDouble(getString(R.string.lat6)),
+                        Double.parseDouble(getString(R.string.long6)),
+                        getString(R.string.link6)));
+                listOfContents.add(new ContentPage(6,getString(R.string.nameinfo7),
+                        getString(R.string.contentinfo7),
+                        imageViewToByte(getString(R.string.image7din1)),
+                        Double.parseDouble(getString(R.string.lat7)),
+                        Double.parseDouble(getString(R.string.long7)),
+                        getString(R.string.link7)));
+                listOfContents.add(new ContentPage(7,getString(R.string.nameinfo8),
+                        getString(R.string.contentinfo8),
+                        imageViewToByte(getString(R.string.image8din1)),
+                        Double.parseDouble(getString(R.string.lat8)),
+                        Double.parseDouble(getString(R.string.long8)),
+                        getString(R.string.link8)));
+                listOfContents.add(new ContentPage(8,getString(R.string.nameinfo9),
+                        getString(R.string.contentinfo9),
+                        imageViewToByte(getString(R.string.image9din1)),
+                        Double.parseDouble(getString(R.string.lat9)),
+                        Double.parseDouble(getString(R.string.long9)),
+                        getString(R.string.link9)));
+                listOfContents.add(new ContentPage(9,getString(R.string.nameinfo10),
+                        getString(R.string.contentinfo10),
+                        imageViewToByte(getString(R.string.image10din1)),
+                        Double.parseDouble(getString(R.string.lat10)),
+                        Double.parseDouble(getString(R.string.long10)),
+                        getString(R.string.link10)));
+                listOfContents.add(new ContentPage(10,getString(R.string.nameinfo11),
+                        getString(R.string.contentinfo11),
+                        imageViewToByte(getString(R.string.image11din1)),
+                        Double.parseDouble(getString(R.string.lat11)),
+                        Double.parseDouble(getString(R.string.long11)),
+                        getString(R.string.link11)));
+                listOfContents.add(new ContentPage(11,getString(R.string.nameinfo12),
+                        getString(R.string.contentinfo12),
+                        imageViewToByte(getString(R.string.image12din1)),
+                        Double.parseDouble(getString(R.string.lat12)),
+                        Double.parseDouble(getString(R.string.long12)),
+                        getString(R.string.link12)));
+                listOfContents.add(new ContentPage(12,getString(R.string.nameinfo13),
+                        getString(R.string.contentinfo13),
+                        imageViewToByte(getString(R.string.image13din1)),
+                        Double.parseDouble(getString(R.string.lat13)),
+                        Double.parseDouble(getString(R.string.long13)),
+                        getString(R.string.link13)));
+                listOfContents.add(new ContentPage(13,getString(R.string.nameinfo14),
+                        getString(R.string.contentinfo14),
+                        imageViewToByte(getString(R.string.image14din1)),
+                        Double.parseDouble(getString(R.string.lat14)),
+                        Double.parseDouble(getString(R.string.long14)),
+                        getString(R.string.link14)));
+                listOfContents.add(new ContentPage(14,getString(R.string.nameinfo15),
+                        getString(R.string.contentinfo15),
+                        imageViewToByte(getString(R.string.image15din1)),
+                        Double.parseDouble(getString(R.string.lat15)),
+                        Double.parseDouble(getString(R.string.long15)),
+                        getString(R.string.link15)));
+                listOfContents.add(new ContentPage(15,getString(R.string.nameinfo16),
+                        getString(R.string.contentinfo16),
+                        imageViewToByte(getString(R.string.image16din1)),
+                        Double.parseDouble(getString(R.string.lat16)),
+                        Double.parseDouble(getString(R.string.long16)),
+                        getString(R.string.link16)));
+                listOfContents.add(new ContentPage(16,getString(R.string.nameinfo17),
+                        getString(R.string.contentinfo17),
+                        imageViewToByte(getString(R.string.image17din1)),
+                        Double.parseDouble(getString(R.string.lat17)),
+                        Double.parseDouble(getString(R.string.long17)),
+                        getString(R.string.link17)));
+                listOfContents.add(new ContentPage(17,getString(R.string.nameinfo18),
+                        getString(R.string.contentinfo18),
+                        imageViewToByte(getString(R.string.image18din1)),
+                        Double.parseDouble(getString(R.string.lat18)),
+                        Double.parseDouble(getString(R.string.long18)),
+                        getString(R.string.link18)));
+                listOfContents.add(new ContentPage(18,getString(R.string.nameinfo19),
+                        getString(R.string.contentinfo19),
+                        imageViewToByte(getString(R.string.image19din1)),
+                        Double.parseDouble(getString(R.string.lat19)),
+                        Double.parseDouble(getString(R.string.long19)),
+                        getString(R.string.link19)));
+                listOfContents.add(new ContentPage(19,getString(R.string.nameinfo20),
+                        getString(R.string.contentinfo20),
+                        imageViewToByte(getString(R.string.image20din1)),
+                        Double.parseDouble(getString(R.string.lat20)),
+                        Double.parseDouble(getString(R.string.long20)),
+                        getString(R.string.link19)));
 
 
 
@@ -159,8 +309,6 @@ public class HomeFragment extends Fragment {
                         .contentDao().insertAll(listOfContents);
                 DataBaseClient.getInstance(root.getContext()).getAppDatabase()
                         .contentDao().insertAllimagies(listOfimagies);
-
-
 
                 return null;
             }
@@ -175,6 +323,8 @@ public class HomeFragment extends Fragment {
         sc.execute();
     }
     public byte[] imageViewToByte(String name){
+         name=name.toLowerCase();
+        System.out.println(name);
         Drawable drawable = getResources().getDrawable(getResources()
                 .getIdentifier(name, "drawable",root.getContext().getPackageName()));
         Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
@@ -195,14 +345,13 @@ public class HomeFragment extends Fragment {
                         .getAppDatabase()
                         .contentDao()
                         .getAllimagies();
-                System.out.println("test111.4"+listofcontent.get(0).getImage());
+
                 return listofcontent;
             }
 
             @Override
             protected void onPostExecute(List<ImagePage>listofcontent) {
                 super.onPostExecute(listofcontent);
-                System.out.println("test111.5");
                 System.out.println("Post executed image");
                 imagePages=listofcontent;
                 ContentAdapter adapter = new ContentAdapter(root.getContext(),contentPagess,fragmentHomeManager,imagePages);

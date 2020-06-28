@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="lat1" type="dimen" format="float">45.7972882</item>
+    <item name="long1" type="dimen" format="float">24.1497368</item>
+</resources>
