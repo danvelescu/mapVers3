@@ -31,11 +31,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";
 
     private List<ImagePage> images;
-   private Context mCtx;
+
 int superpostion;
-    public ImageAdapter(List<ImagePage> images, Context mCtx,int parentadaptorpostion) {
+    public ImageAdapter(List<ImagePage> images,int parentadaptorpostion) {
         this.images = images;
-        this.mCtx = mCtx;
         this.superpostion=parentadaptorpostion;
     }
 

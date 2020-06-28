@@ -75,7 +75,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         });
 
         List<ImagePage>list=getSortImages(position,imagePages);
-        adapter = new ImageAdapter(list,mCtx,position);
+        adapter = new ImageAdapter(list,position);
         recyclerView1.setAdapter(adapter);
 
     }
