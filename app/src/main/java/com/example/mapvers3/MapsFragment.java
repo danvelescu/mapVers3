@@ -149,8 +149,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     target = new LatLng(targetPlace.getLat(), targetPlace.getLongitudine());
                     markerO = new MarkerOptions().position(target).title(targetPlace.getNameInfo());
                     markerO.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+
                     googlemap.addMarker(markerO);
                     googlemap.moveCamera(CameraUpdateFactory.newLatLng(target));
+                    googlemap.setMinZoomPreference(15);
 
 
 

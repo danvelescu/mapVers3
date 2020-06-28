@@ -116,7 +116,6 @@ public class HomeFragment extends Fragment {
         class SaveContent extends AsyncTask<Void, Void ,Void> {
             @SuppressLint("ResourceType")
 
-
             List<ContentPage> listOfContents = new ArrayList<>();
             List<ImagePage> listOfimagies = new ArrayList<>();
             //int id, String nameInfo, String info, byte[] image, Double lat, Double longitudine
