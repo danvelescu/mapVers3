@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +31,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder>{
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private List<ImagePage> images;
+    private List<ImagePage> images = new ArrayList<>();
 
 int superpostion;
     public ImageAdapter(List<ImagePage> images,int parentadaptorpostion) {
-        this.images = images;
         this.superpostion=parentadaptorpostion;
+        for(ImagePage i:images){
+            if(i.getContentID()==superpostion){
+                this.images.add(images.get(i.getId()));
+            }
+        }
     }
 
     @NonNull
@@ -47,9 +52,13 @@ int superpostion;
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
             byte[] image = images.get(position).getImage();
             Bitmap bitmab = BitmapFactory.decodeByteArray(image, 0, image.length);
+            holder.image.clearAnimation();
             holder.image.setImageBitmap(bitmab);
+
+
     }
 
 

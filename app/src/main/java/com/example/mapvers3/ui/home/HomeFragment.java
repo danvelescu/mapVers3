@@ -86,7 +86,6 @@ public class HomeFragment extends Fragment {
 
     private void getTasks()
     {
-        System.out.println("test111.1");
         class GetTasks extends AsyncTask<Void,Void, List<ContentPage>> {
 
             @Override
@@ -102,7 +101,6 @@ public class HomeFragment extends Fragment {
 
             @Override
             protected void onPostExecute(List<ContentPage> contentPages) {
-                System.out.println("test111.2");
                 super.onPostExecute(contentPages);
                 contentPagess=contentPages;
                getImageTask();
@@ -135,50 +133,50 @@ public class HomeFragment extends Fragment {
                 listOfimagies.add(new ImagePage(11,3,imageViewToByte(getString(R.string.image4din3))));
                 listOfimagies.add(new ImagePage(12,3,imageViewToByte(getString(R.string.image4din4))));
                 listOfimagies.add(new ImagePage(13,3,imageViewToByte(getString(R.string.image4din5))));
-                listOfimagies.add(new ImagePage(14,99,imageViewToByte(getString(R.string.image4din5))));
-                listOfimagies.add(new ImagePage(15,4,imageViewToByte(getString(R.string.image5din1))));
-                listOfimagies.add(new ImagePage(16,4,imageViewToByte(getString(R.string.image5din2))));
-                listOfimagies.add(new ImagePage(17,4,imageViewToByte(getString(R.string.image5din3))));
-                listOfimagies.add(new ImagePage(18,4,imageViewToByte(getString(R.string.image5din4))));
-                listOfimagies.add(new ImagePage(19,99,imageViewToByte(getString(R.string.image5din4))));
-                listOfimagies.add(new ImagePage(20,99,imageViewToByte(getString(R.string.image5din4))));
-                listOfimagies.add(new ImagePage(21,5,imageViewToByte(getString(R.string.image6din1))));
-                listOfimagies.add(new ImagePage(22,5,imageViewToByte(getString(R.string.image6din2))));
-                listOfimagies.add(new ImagePage(23,5,imageViewToByte(getString(R.string.image6din3))));
-                listOfimagies.add(new ImagePage(24,5,imageViewToByte(getString(R.string.image6din4))));
-                listOfimagies.add(new ImagePage(25,5,imageViewToByte(getString(R.string.image6din5))));
-                listOfimagies.add(new ImagePage(26,5,imageViewToByte(getString(R.string.image6din6))));
-                listOfimagies.add(new ImagePage(27,6,imageViewToByte(getString(R.string.image7din1))));
-                listOfimagies.add(new ImagePage(28,6,imageViewToByte(getString(R.string.image7din2))));
-                listOfimagies.add(new ImagePage(29,6,imageViewToByte(getString(R.string.image7din3))));
-                listOfimagies.add(new ImagePage(30,7,imageViewToByte(getString(R.string.image8din1))));
-                listOfimagies.add(new ImagePage(31,7,imageViewToByte(getString(R.string.image8din2))));
-                listOfimagies.add(new ImagePage(32,7,imageViewToByte(getString(R.string.image8din3))));
-                listOfimagies.add(new ImagePage(33,7,imageViewToByte(getString(R.string.image8din4))));
-                listOfimagies.add(new ImagePage(34,99,imageViewToByte(getString(R.string.image8din1))));
-                listOfimagies.add(new ImagePage(35,99,imageViewToByte(getString(R.string.image8din1))));
-                listOfimagies.add(new ImagePage(36,8,imageViewToByte(getString(R.string.image9din1))));
-                listOfimagies.add(new ImagePage(37,8,imageViewToByte(getString(R.string.image9din2))));
-                listOfimagies.add(new ImagePage(38,8,imageViewToByte(getString(R.string.image9din3))));
-                listOfimagies.add(new ImagePage(39,8,imageViewToByte(getString(R.string.image9din4))));
-                listOfimagies.add(new ImagePage(40,8,imageViewToByte(getString(R.string.image9din5))));
-                listOfimagies.add(new ImagePage(41,9,imageViewToByte(getString(R.string.image10din1))));
-                listOfimagies.add(new ImagePage(42,9,imageViewToByte(getString(R.string.image10din2))));
-                listOfimagies.add(new ImagePage(43,9,imageViewToByte(getString(R.string.image10din3))));
-                listOfimagies.add(new ImagePage(44,9,imageViewToByte(getString(R.string.image10din4))));
-                listOfimagies.add(new ImagePage(45,10,imageViewToByte(getString(R.string.image11din1))));
-                listOfimagies.add(new ImagePage(46,10,imageViewToByte(getString(R.string.image11din2))));
-                listOfimagies.add(new ImagePage(47,10,imageViewToByte(getString(R.string.image11din3))));
-                listOfimagies.add(new ImagePage(48,10,imageViewToByte(getString(R.string.image11din4))));
-                listOfimagies.add(new ImagePage(49,11,imageViewToByte(getString(R.string.image12din1))));
-                listOfimagies.add(new ImagePage(50,12,imageViewToByte(getString(R.string.image13din1))));
-                listOfimagies.add(new ImagePage(51,13,imageViewToByte(getString(R.string.image14din1))));
-                listOfimagies.add(new ImagePage(52,14,imageViewToByte(getString(R.string.image15din1))));
-                listOfimagies.add(new ImagePage(53,15,imageViewToByte(getString(R.string.image16din1))));
-                listOfimagies.add(new ImagePage(54,16,imageViewToByte(getString(R.string.image17din1))));
-                listOfimagies.add(new ImagePage(55,17,imageViewToByte(getString(R.string.image18din1))));
-                listOfimagies.add(new ImagePage(56,18,imageViewToByte(getString(R.string.image19din1))));
-                listOfimagies.add(new ImagePage(57,19,imageViewToByte(getString(R.string.image20din1))));
+
+                listOfimagies.add(new ImagePage(14,4,imageViewToByte(getString(R.string.image5din1))));
+                listOfimagies.add(new ImagePage(15,4,imageViewToByte(getString(R.string.image5din2))));
+                listOfimagies.add(new ImagePage(16,4,imageViewToByte(getString(R.string.image5din3))));
+                listOfimagies.add(new ImagePage(17,4,imageViewToByte(getString(R.string.image5din4))));
+
+
+                listOfimagies.add(new ImagePage(18,5,imageViewToByte(getString(R.string.image6din1))));
+                listOfimagies.add(new ImagePage(19,5,imageViewToByte(getString(R.string.image6din2))));
+                listOfimagies.add(new ImagePage(20,5,imageViewToByte(getString(R.string.image6din3))));
+                listOfimagies.add(new ImagePage(21,5,imageViewToByte(getString(R.string.image6din4))));
+                listOfimagies.add(new ImagePage(22,5,imageViewToByte(getString(R.string.image6din5))));
+                listOfimagies.add(new ImagePage(23,5,imageViewToByte(getString(R.string.image6din6))));
+                listOfimagies.add(new ImagePage(24,6,imageViewToByte(getString(R.string.image7din1))));
+                listOfimagies.add(new ImagePage(25,6,imageViewToByte(getString(R.string.image7din2))));
+                listOfimagies.add(new ImagePage(26,6,imageViewToByte(getString(R.string.image7din3))));
+                listOfimagies.add(new ImagePage(27,7,imageViewToByte(getString(R.string.image8din1))));
+                listOfimagies.add(new ImagePage(28,7,imageViewToByte(getString(R.string.image8din2))));
+                listOfimagies.add(new ImagePage(29,7,imageViewToByte(getString(R.string.image8din3))));
+                listOfimagies.add(new ImagePage(30,7,imageViewToByte(getString(R.string.image8din4))));
+
+
+                listOfimagies.add(new ImagePage(31,8,imageViewToByte(getString(R.string.image9din1))));
+                listOfimagies.add(new ImagePage(32,8,imageViewToByte(getString(R.string.image9din2))));
+                listOfimagies.add(new ImagePage(33,8,imageViewToByte(getString(R.string.image9din3))));
+                listOfimagies.add(new ImagePage(34,8,imageViewToByte(getString(R.string.image9din4))));
+                listOfimagies.add(new ImagePage(35,8,imageViewToByte(getString(R.string.image9din5))));
+                listOfimagies.add(new ImagePage(36,9,imageViewToByte(getString(R.string.image10din1))));
+                listOfimagies.add(new ImagePage(37,9,imageViewToByte(getString(R.string.image10din2))));
+                listOfimagies.add(new ImagePage(38,9,imageViewToByte(getString(R.string.image10din3))));
+                listOfimagies.add(new ImagePage(39,9,imageViewToByte(getString(R.string.image10din4))));
+                listOfimagies.add(new ImagePage(40,10,imageViewToByte(getString(R.string.image11din1))));
+                listOfimagies.add(new ImagePage(41,10,imageViewToByte(getString(R.string.image11din2))));
+                listOfimagies.add(new ImagePage(42,10,imageViewToByte(getString(R.string.image11din3))));
+                listOfimagies.add(new ImagePage(43,10,imageViewToByte(getString(R.string.image11din4))));
+                listOfimagies.add(new ImagePage(44,11,imageViewToByte(getString(R.string.image12din1))));
+                listOfimagies.add(new ImagePage(45,12,imageViewToByte(getString(R.string.image13din1))));
+                listOfimagies.add(new ImagePage(46,13,imageViewToByte(getString(R.string.image14din1))));
+                listOfimagies.add(new ImagePage(47,14,imageViewToByte(getString(R.string.image15din1))));
+                listOfimagies.add(new ImagePage(48,15,imageViewToByte(getString(R.string.image16din1))));
+                listOfimagies.add(new ImagePage(49,16,imageViewToByte(getString(R.string.image17din1))));
+                listOfimagies.add(new ImagePage(50,17,imageViewToByte(getString(R.string.image18din1))));
+                listOfimagies.add(new ImagePage(51,18,imageViewToByte(getString(R.string.image19din1))));
+                listOfimagies.add(new ImagePage(52,19,imageViewToByte(getString(R.string.image20din1))));
 
                // int id, String nameInfo, String info, byte[] image, Double lat, Double longitudine,String link
                 listOfContents.add(new ContentPage(0,getString(R.string.nameinfo1),
@@ -321,6 +319,7 @@ public class HomeFragment extends Fragment {
        SaveContent sc = new SaveContent();
         sc.execute();
     }
+
     public byte[] imageViewToByte(String name){
          name=name.toLowerCase();
         System.out.println(name);
@@ -353,16 +352,12 @@ public class HomeFragment extends Fragment {
                 super.onPostExecute(listofcontent);
                 System.out.println("Post executed image");
                 imagePages=listofcontent;
-                ContentAdapter adapter = new ContentAdapter(root.getContext(),contentPagess,fragmentHomeManager,imagePages);
+                ContentAdapter adapter = new ContentAdapter(root.getContext(),contentPagess,imagePages,getFragmentManager());
                 recyclerView.setAdapter(adapter);
             }
         }
         GetTasksImage gt = new GetTasksImage();
         gt.execute();
-
     }
-
-
-
 
 }

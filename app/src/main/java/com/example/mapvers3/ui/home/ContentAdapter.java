@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.proto.ProtoOutputStream;
 import android.view.LayoutInflater;
@@ -33,23 +34,34 @@ import com.example.mapvers3.R;
 import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.zip.Inflater;
 
 public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentViewHolder> {
-   public static List<ContentPage> content;
-    private static int adapterposition;
-    private Context mCtx;
+     public static List<ContentPage> content;
+     private static int adapterposition;
+     private Context mCtx;
+     private List<ContentPage> contentlist;
+     FragmentManager root;
+     private List<ImagePage>imagePages = new ArrayList<>();
+     private  RecyclerView recyclerView1;
+     private ImageAdapter adapter;
 
-    private List<ContentPage> contentlist;
-    FragmentManager root;
-   private List<ImagePage>imagePages;
-  private  RecyclerView recyclerView1;
-  private ImageAdapter adapter;
-    public ContentAdapter(Context mCtx, List<ContentPage> contentlist, FragmentManager fragmentManager,List<ImagePage>imagePages){
+
+    public ContentAdapter(Context mCtx, List<ContentPage> contentlist,List<ImagePage>imagePages , FragmentManager root){
         this.mCtx = mCtx;
         this.contentlist = contentlist;
-        this.root = fragmentManager;
         this.imagePages=imagePages;
+        this.root = root;
+    }
+
+    public ContentAdapter(Context mCtx, List<ContentPage> contentlist, FragmentManager root){
+        this.mCtx = mCtx;
+        this.contentlist = contentlist;
+        for (ContentPage i:contentlist) {
+            this.imagePages.add(new ImagePage(i.getId(),i.getId(),i.getImage()));
+        }
+        this.root = root;
     }
 
 
@@ -73,13 +85,13 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
                 mCtx.startActivity(intent);
             }
         });
-
-        List<ImagePage>list=getSortImages(position,imagePages);
-        adapter = new ImageAdapter(list,position);
-        recyclerView1.setAdapter(adapter);
-
+        adapter = new ImageAdapter(imagePages,c.getId());
+        setAdapter();
+       // recyclerView1.setAdapter(adapter);
     }
-
+    private void setAdapter(){
+        recyclerView1.setAdapter(adapter);
+    }
     @Override
     public int getItemCount() {
         return contentlist.size();
@@ -105,7 +117,6 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         @Override
         public void onClick(View view) {
             adapterposition = getAdapterPosition();
-
                 ContentPage contentPage = contentlist.get(getAdapterPosition());
                 content = contentlist;
                openMapLocation();
@@ -127,6 +138,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
       List<ImagePage> sortimg=new ArrayList<>();
      for(int i=0;i<imagePage.size();i++){
          if(pos==imagePage.get(i).getContentID()){
+             System.out.println("----------------------------------------"+imagePage.get(i).getContentID());
              sortimg.add(imagePage.get(i));
          }
      }

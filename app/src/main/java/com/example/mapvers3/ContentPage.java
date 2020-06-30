@@ -1,6 +1,8 @@
 package com.example.mapvers3;
 
 import android.media.Image;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -9,7 +11,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity
-public class ContentPage implements Serializable {
+public class ContentPage implements Parcelable {
     @PrimaryKey
     private int id;
 
@@ -42,6 +44,10 @@ public class ContentPage implements Serializable {
         this.longitudine = longitudine;
         this.link=link;
     }
+
+
+
+
 
     public String getLink() {
         return link;
@@ -99,4 +105,49 @@ public class ContentPage implements Serializable {
         this.longitudine = longitudine;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(this.id);
+        parcel.writeString(this.nameInfo);
+        parcel.writeString(this.info);
+        parcel.writeByteArray(this.image);
+        parcel.writeDouble(this.lat);
+        parcel.writeDouble(this.longitudine);
+        parcel.writeString(this.link);
+    }
+
+    protected ContentPage(Parcel in) {
+        id = in.readInt();
+        link = in.readString();
+        nameInfo = in.readString();
+        info = in.readString();
+        image = in.createByteArray();
+        if (in.readByte() == 0) {
+            lat = null;
+        } else {
+            lat = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            longitudine = null;
+        } else {
+            longitudine = in.readDouble();
+        }
+    }
+
+    public static final Creator<ContentPage> CREATOR = new Creator<ContentPage>() {
+        @Override
+        public ContentPage createFromParcel(Parcel in) {
+            return new ContentPage(in);
+        }
+
+        @Override
+        public ContentPage[] newArray(int size) {
+            return new ContentPage[size];
+        }
+    };
 }

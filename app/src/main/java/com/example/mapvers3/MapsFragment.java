@@ -5,14 +5,20 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -32,18 +38,21 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.lang.annotation.Target;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
+        private MarkerOptions markerO;
     LatLng mDefaultLocation = new LatLng(45, 24);
     private int DEFAULT_ZOOM = 1;
-
     private Location mLastKnownLocation;
     private boolean mLocationPermissionGranted;
     private boolean chekPosition = false;
@@ -51,25 +60,19 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     PlaceDetectionClient mPlaceDetectionClient;
     FusedLocationProviderClient mFusedLocationProviderClient;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 100;
+    private CostumeInfoWindowMap customInfoWindow;
     Integer id=-1;
     GoogleMap googlemap;
-
+    private List<ContentPage> contentPages1;
+    private ViewGroup container1;
+    private RecyclerView recyclerView;
+    private List<ImagePage> listForImage;
+    private List<ContentPage>  arrayofcontent = new ArrayList<>();
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
         @Override
         public void onMapReady(GoogleMap googleMap) {
             googlemap = googleMap;
-
             getTasks();
         }
     };
@@ -79,7 +82,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
+            container1 = container;
         // Construct a GeoDataClient.
         mGeoDataClient = Places.getGeoDataClient(super.getContext(), null);
 
@@ -90,10 +93,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(super.getContext());
 
         return inflater.inflate(R.layout.fragment_maps, container, false);
+
+
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+
         getTasks();
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment =
@@ -112,6 +120,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         }
 
         getLocationPermission();
+
     }
 
 
@@ -125,15 +134,44 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         .getAppDatabase()
                         .contentDao()
                         .getAll();
+                getImages();
                 return listofcontent;
             }
 
             @Override
             protected void onPostExecute(List<ContentPage> contentPages) {
+                arrayofcontent = contentPages;
+                customInfoWindow = new CostumeInfoWindowMap(getContext(),container1,contentPages);
                 super.onPostExecute(contentPages);
+                googlemap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+
+                        ContentPage targetCOntent = new ContentPage();
+                        LatLng latLon = marker.getPosition();
+                        for (ContentPage i: arrayofcontent) {
+                            if(i.getLongitudine()==latLon.longitude&&i.getLat()==latLon.latitude){
+                                targetCOntent = i;
+                            }
+                        }
+
+                        infoFragmentOnce infoFragmentOnce = new infoFragmentOnce();
+                        FragmentManager fragmentManager = getFragmentManager();
+
+
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("content",targetCOntent);
+                        infoFragmentOnce.setArguments(bundle);
+                        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment,infoFragmentOnce).commit();
+
+
+//
+
+                    }
+                });
                 ContentPage targetPlace=new ContentPage();
                 LatLng target;
-                MarkerOptions markerO;
+
                 try {
                     for (ContentPage place : contentPages
                     ) {
@@ -144,7 +182,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         }
 
                     }
-                    
+                    googlemap.setInfoWindowAdapter(customInfoWindow);
                     targetPlace = FindById(contentPages);
                     target = new LatLng(targetPlace.getLat(), targetPlace.getLongitudine());
                     markerO = new MarkerOptions().position(target).title(targetPlace.getNameInfo());
@@ -153,6 +191,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     googlemap.addMarker(markerO);
                     googlemap.moveCamera(CameraUpdateFactory.newLatLng(target));
                     googlemap.setMinZoomPreference(15);
+
 
 
 
@@ -167,6 +206,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
+
+
+
+
     private ContentPage FindById(List<ContentPage> pages) {
         for (ContentPage a : pages) {
             if (a.getId() == id) {
@@ -174,6 +217,29 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             }
         }
         return new ContentPage();
+    }
+    private void getImages(){
+        class GetTasksImage extends AsyncTask<Void,Void, List<ImagePage>> {
+
+            @Override
+            protected List<ImagePage> doInBackground(Void... voids) {
+                List<ImagePage> listofcontent = DataBaseClient
+                        .getInstance(getContext())
+                        .getAppDatabase()
+                        .contentDao()
+                        .getAllimagies();
+
+                return listofcontent;
+            }
+
+            @Override
+            protected void onPostExecute(List<ImagePage>listofcontent) {
+                super.onPostExecute(listofcontent);
+                listForImage = listofcontent;
+            }
+        }
+        GetTasksImage gt = new GetTasksImage();
+        gt.execute();
     }
 
 
@@ -221,8 +287,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             return;
         }
         try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a raw resource file.
             boolean success = googleMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
                             getContext(), R.raw.map_style));
@@ -237,6 +301,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         googleMap.setMyLocationEnabled(true);
         updateLocationUI();
         getDeviceLocation();
+
+
 
     }
 
@@ -289,6 +355,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             Log.e("Exception: %s", e.getMessage());
         }
     }
+
 
 
 }
