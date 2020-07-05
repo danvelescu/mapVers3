@@ -35,22 +35,16 @@ public class infoFragmentOnce extends Fragment {
         textinfo =  rootView.findViewById(R.id.textfinal999);
         textname = rootView.findViewById(R.id.txtfinal1999);
 
-
         image = (ImageView) rootView.findViewById(R.id.imageforonce1);
-
-
-
         ContentPage contentid;
-        Bundle bundle = this.getArguments();
 
+             Bundle bundle = this.getArguments();
             contentid = (ContentPage) bundle.getParcelable("content");
-            System.out.println(contentid.getLat()+" successs");
-            System.out.println(contentid.getInfo()+" successs");
-           textname.setText(contentid.getNameInfo());
+            textname.setText(contentid.getNameInfo());
             textinfo.setText(contentid.getInfo());
             byte[] imagee = contentid.getImage();
             Bitmap bitmab = BitmapFactory.decodeByteArray(imagee, 0, imagee.length);
-           image.setImageBitmap(bitmab);
+            image.setImageBitmap(bitmab);
 
         return rootView;
     }

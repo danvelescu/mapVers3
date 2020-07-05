@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -18,6 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.FutureTarget;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.example.mapvers3.ContentPage;
 import com.example.mapvers3.DataBaseClient;
 import com.example.mapvers3.ImagePage;
 import com.example.mapvers3.R;
@@ -30,11 +34,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder>{
 
     private static final String TAG = "RecyclerViewAdapter";
-
+private Context mCtx;
     private List<ImagePage> images = new ArrayList<>();
 
 int superpostion;
-    public ImageAdapter(List<ImagePage> images,int parentadaptorpostion) {
+    public ImageAdapter(List<ImagePage> images, int parentadaptorpostion) {
         this.superpostion=parentadaptorpostion;
         for(ImagePage i:images){
             if(i.getContentID()==superpostion){
@@ -42,6 +46,8 @@ int superpostion;
             }
         }
     }
+
+
 
     @NonNull
     @Override
@@ -52,13 +58,12 @@ int superpostion;
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        holder.image.setImageDrawable(null);
+        if(images.get(position).getContentID()==superpostion) {
             byte[] image = images.get(position).getImage();
             Bitmap bitmab = BitmapFactory.decodeByteArray(image, 0, image.length);
-            holder.image.clearAnimation();
             holder.image.setImageBitmap(bitmab);
-
-
+        }
     }
 
 
@@ -69,7 +74,7 @@ int superpostion;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        CircleImageView image;
+        ImageView image;
 
         @SuppressLint("WrongConstant")
         public ViewHolder(@NonNull View itemView) {

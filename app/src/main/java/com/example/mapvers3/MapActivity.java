@@ -35,7 +35,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity {
 
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -60,7 +60,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.map, menu);
         return true;
     }
@@ -74,9 +73,4 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-    }
 }

@@ -18,12 +18,14 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.mapvers3.ui.home.ContentAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -83,13 +85,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
             container1 = container;
-        // Construct a GeoDataClient.
+
         mGeoDataClient = Places.getGeoDataClient(super.getContext(), null);
 
-        // Construct a PlaceDetectionClient.
+
         mPlaceDetectionClient = Places.getPlaceDetectionClient(super.getContext(), null);
 
-        // Construct a FusedLocationProviderClient.
+
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(super.getContext());
 
         return inflater.inflate(R.layout.fragment_maps, container, false);
@@ -100,9 +102,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-
-        getTasks();
+      getTasks();
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.nav_map);
@@ -110,7 +110,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
-
         Bundle bundle = this.getArguments();
         try {
             id = bundle.getInt("id");
@@ -244,11 +243,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
 
     private void getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
+
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -327,24 +322,27 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void getDeviceLocation() {
-        /*
-         * Get the best and most recent location of the device, which may be null in rare
-         * cases when a location is not available.
-         */
+
+
+
+
         try {
             if (mLocationPermissionGranted) {
                 Task locationResult = mFusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(super.getActivity(), new OnCompleteListener() {
+
+
+
+
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
-                            // Set the map's camera position to the current location of the device.
                             mLastKnownLocation =  (Location) task.getResult();
                             googlemap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(mLastKnownLocation.getLatitude(),
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                        } else {
 
+                        } else {
                            googlemap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
                             googlemap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
@@ -356,7 +354,35 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    private void chekNear(){
+        //arrayofcontent
+        float[] results = new float[1];
+        for (ContentPage i:arrayofcontent) {
 
 
+            Location.distanceBetween(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude(), i.getLat(), i.getLongitudine(), results);
+
+            if (results[0] < 100) {
+                Toast.makeText(getContext(), "Esti Aproape de "+i.getNameInfo(), Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 10000;
+
+    @Override
+    public void onResume() {
+        handler.postDelayed(runnable = new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(runnable, delay);
+                chekNear();
+            }
+        },delay);
+        super.onResume();
+    }
 }
 
