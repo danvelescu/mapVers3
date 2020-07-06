@@ -21,6 +21,7 @@ public class ImagePage {
         this.contentID = contentID;
         this.image = image;
     }
+    public ImagePage(){}
 
     public int getId() {
         return id;
@@ -44,5 +45,11 @@ public class ImagePage {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public ImagePage getByContentId(int id){
+        if(this.getContentID()==id)
+            return this;
+        else return new ImagePage();
     }
 }

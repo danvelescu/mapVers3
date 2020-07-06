@@ -48,6 +48,8 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
      private ImageAdapter adapter;
 
 
+
+
     public ContentAdapter(Context mCtx, List<ContentPage> contentlist,List<ImagePage>imagePages , FragmentManager root){
         this.mCtx = mCtx;
         this.contentlist = contentlist;
@@ -55,14 +57,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         this.root = root;
     }
 
-    public ContentAdapter(Context mCtx, List<ContentPage> contentlist, FragmentManager root){
-        this.mCtx = mCtx;
-        this.contentlist = contentlist;
-        for (ContentPage i:contentlist) {
-            this.imagePages.add(new ImagePage(i.getId(),i.getId(),i.getImage()));
-        }
-        this.root = root;
-    }
+
 
 
 
@@ -74,6 +69,14 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
 
     @Override
     public void onBindViewHolder(@NonNull final ContentViewHolder holder, final int position) {
+
+        holder.image1.setImageBitmap(null);
+        holder.image2.setImageBitmap(null);
+        holder.image3.setImageBitmap(null);
+        holder.image1.setImageDrawable(null);
+        holder.image2.setImageDrawable(null);
+        holder.image3.setImageDrawable(null);
+
         ContentPage c = contentlist.get(position);
         holder.text1.setText(c.getInfo());
         holder.text2.setText(c.getNameInfo());
@@ -85,13 +88,28 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
                 mCtx.startActivity(intent);
             }
         });
-        adapter = new ImageAdapter(imagePages,c.getId());
-        setAdapter();
-       // recyclerView1.setAdapter(adapter);
+
+        for(int i = 0;i<imagePages.size();i++) {
+            if(imagePages.get(i).getContentID()==position) {
+                byte[] image = imagePages.get(i).getImage();
+                Bitmap bitmab = BitmapFactory.decodeByteArray(image, 0, image.length);
+                if(holder.image1.getDrawable() == null) {
+                    holder.image1.setImageBitmap(bitmab);
+                    System.out.println("image insert1");
+                }
+                else if(holder.image2.getDrawable() == null) {
+                    holder.image2.setImageBitmap(bitmab);
+                    System.out.println("imeage insert2");
+                }
+                else if(holder.image3.getDrawable() == null) {
+                    holder.image3.setImageBitmap(bitmab);
+                    System.out.println("image insert3");
+                }
+
+            }
+        }
     }
-    private void setAdapter(){
-        recyclerView1.setAdapter(adapter);
-    }
+
     @Override
     public int getItemCount() {
         return contentlist.size();
@@ -100,15 +118,18 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     class ContentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView text1,text2;
         Button linkbtn;
-
+        ImageView image1,image2,image3;
 
         public ContentViewHolder(@NonNull View itemView)  {
             super(itemView);
+            image1 = itemView.findViewById(R.id.contentimage1);
+            image2 = itemView.findViewById(R.id.contentimage2);
+            image3 = itemView.findViewById(R.id.contentimage3);
              linkbtn = itemView.findViewById(R.id.button);
             text1 = itemView.findViewById(R.id.textView2);
             text2 = itemView.findViewById(R.id.textView3);
-            recyclerView1 = itemView.findViewById(R.id.recyclerView2);
-            recyclerView1.setLayoutManager(new LinearLayoutManager(mCtx,LinearLayoutManager.HORIZONTAL,false));
+
+
 
             itemView.setOnClickListener(this);
 
